@@ -3,7 +3,7 @@ import { PrepareContext } from "semantic-release";
 import TOML from "@ltd/j-toml";
 import { getCargoMetadata } from "./cargo";
 
-export default function (config: PluginConfig, context: PrepareContext) {
+export default function(config: PluginConfig, context: PrepareContext) {
   const data = getCargoMetadata();
 
   for (const cargoPackage of data.packages) {
@@ -47,7 +47,8 @@ export function replaceVersion(manifestPath: string, newVersion: string) {
   if (manifest["dev-dependencies"]) {
     for (let [, value] of Object.entries(manifest["dev-dependencies"])) {
       if (typeof value == "object" && value.path) {
-        value.version = TOML.literal(`"${newVersion}"`);
+        delete value.version;
+        // value.version = TOML.literal(`"${newVersion}"`);
       }
     }
   }
